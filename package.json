@@ -1,0 +1,9 @@
+{
+  "name": "aerovision-2026-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AeroVision 2026 IEEE RAS drone MCQ quiz with Vercel serverless backend",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
