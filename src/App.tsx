@@ -61,7 +61,7 @@ function App() {
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [quizError, setQuizError] = useState('');
   const [feedbackError, setFeedbackError] = useState('');
-  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const [dashboardOpen, setDashboardOpen] = useState(() => new URLSearchParams(window.location.search).get('dashboard') === '1');
   const [dashboardUnlocked, setDashboardUnlocked] = useState(false);
   const [ownerCode, setOwnerCode] = useState('');
 
@@ -101,7 +101,7 @@ function App() {
     <div className="pointer-events-none fixed inset-0 aviation-grid opacity-80" />
     <div className="pointer-events-none fixed left-1/2 top-0 h-px w-1/2 scanline" />
     <div className="relative mx-auto flex min-h-screen w-full max-w-[1240px] flex-col px-5 py-5 sm:px-8 lg:px-10">
-      <Header phase={phase} onDashboard={() => { setDashboardOpen(true); setDashboardUnlocked(false); setOwnerCode(''); }} />
+      <Header phase={phase} />
       <main className="flex-1 py-8 sm:py-12">{phase === 'workshop' && <Workshop participant={participant} updateParticipant={updateParticipant} error={quizError} onStart={startQuiz} />}{phase === 'quiz' && <Quiz current={currentQuestion} answers={answers} error={quizError} onChoose={chooseAnswer} onPrevious={() => { setCurrentQuestion((value) => Math.max(0, value - 1)); setQuizError(''); }} onNext={() => { if (answers[currentQuestion] < 0) { setQuizError('Choose an answer to continue.'); return; } setCurrentQuestion((value) => Math.min(questions.length - 1, value + 1)); setQuizError(''); }} onSubmit={submitQuiz} />}{phase === 'result' && <Result participant={participant} score={score} percentage={percentage} onContinue={() => setPhase('feedback')} />}{phase === 'feedback' && <FeedbackForm participant={participant} updateParticipant={updateParticipant} feedback={feedback} updateFeedback={updateFeedback} error={feedbackError} onSubmit={submitFeedback} />}{phase === 'complete' && submission && <Completion submission={submission} onViewResult={() => setPhase('result')} onStartOver={startOver} />}</main>
       <Footer />
     </div>
@@ -109,9 +109,9 @@ function App() {
   </div>;
 }
 
-function Header({ phase, onDashboard }: { phase: Phase; onDashboard: () => void }) {
+function Header({ phase }: { phase: Phase }) {
   const labels: Record<Phase, string> = { workshop: 'Workshop briefing', quiz: 'Knowledge check', result: 'Quiz result', feedback: 'Workshop feedback', complete: 'Submission complete' };
-  return <header className="flex items-center justify-between border-b border-line/70 pb-5"><div className="flex items-center gap-3"><div className="grid h-11 w-11 place-items-center rounded-xl border border-sky/60 bg-sky/10 text-sky"><Plane size={22} /></div><div><p className="font-mono text-[10px] uppercase tracking-[.22em] text-sky">Aero Vision Workshop 2026</p><p className="mt-1 text-xs font-semibold text-muted">JSS ATE Bengaluru <span className="mx-1 text-line">/</span> IEEE RAS Student Chapter</p></div></div><div className="flex items-center gap-4"><button type="button" onPointerDown={onDashboard} onClick={onDashboard} className="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-muted transition hover:border-sky hover:text-ink"><LockKeyhole size={13} /> Feedback dashboard</button><div className="hidden items-center gap-2 sm:flex"><span className="h-2 w-2 rounded-full bg-lime shadow-[0_0_14px_#c4f15b]" /><span className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">{labels[phase]}</span></div></div></header>;
+  return <header className="flex items-center justify-between border-b border-line/70 pb-5"><div className="flex items-center gap-3"><div className="grid h-11 w-11 place-items-center rounded-xl border border-sky/60 bg-sky/10 text-sky"><Plane size={22} /></div><div><p className="font-mono text-[10px] uppercase tracking-[.22em] text-sky">Aero Vision Workshop 2026</p><p className="mt-1 text-xs font-semibold text-muted">JSS ATE Bengaluru <span className="mx-1 text-line">/</span> IEEE RAS Student Chapter</p></div></div><div className="flex items-center gap-4"><a href="?dashboard=1" className="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-muted transition hover:border-sky hover:text-ink"><LockKeyhole size={13} /> Feedback dashboard</a><div className="hidden items-center gap-2 sm:flex"><span className="h-2 w-2 rounded-full bg-lime shadow-[0_0_14px_#c4f15b]" /><span className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">{labels[phase]}</span></div></div></header>;
 }
 
 function Footer() { return <footer className="flex flex-col gap-2 border-t border-line/70 py-5 text-[10px] uppercase tracking-[.15em] text-muted sm:flex-row sm:items-center sm:justify-between"><span>Department of Robotics &amp; Automation</span><span>In association with IEEE Robotics &amp; Automation Society</span></footer>; }
