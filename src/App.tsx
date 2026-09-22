@@ -19,21 +19,26 @@ function downloadCertificate(participantName: string) {
     const context = canvas.getContext('2d');
     if (!context) return;
     context.drawImage(image, 0, 0);
-    const scale = canvas.width / 1151;
-    const nameAreaX = Math.round(325 * scale);
-    const nameAreaY = Math.round(492 * scale);
-    const nameAreaWidth = Math.round(610 * scale);
-    const nameAreaHeight = Math.round(76 * scale);
+    const scale = canvas.width / 1264;
+    const nameAreaX = Math.round(320 * scale);
+    const nameAreaY = Math.round(500 * scale);
+    const nameAreaWidth = Math.round(625 * scale);
+    const nameAreaHeight = Math.round(78 * scale);
     context.fillStyle = '#f8f5ee';
     context.fillRect(nameAreaX, nameAreaY, nameAreaWidth, nameAreaHeight);
     context.strokeStyle = '#243754';
     context.lineWidth = Math.max(1, Math.round(2 * scale));
     context.beginPath();
-    context.moveTo(Math.round(360 * scale), Math.round(570 * scale));
-    context.lineTo(Math.round(920 * scale), Math.round(570 * scale));
+    context.moveTo(Math.round(360 * scale), Math.round(575 * scale));
+    context.lineTo(Math.round(920 * scale), Math.round(575 * scale));
     context.stroke();
     context.fillStyle = '#132b4f';
-    context.font = `600 ${Math.round(46 * scale)}px Georgia, serif`;
+    let fontSize = Math.round(46 * scale);
+    context.font = `600 ${fontSize}px Georgia, serif`;
+    while (context.measureText(participantName.toUpperCase()).width > Math.round(560 * scale) && fontSize > 24) {
+      fontSize -= 1;
+      context.font = `600 ${fontSize}px Georgia, serif`;
+    }
     context.textAlign = 'center';
     context.fillText(participantName.toUpperCase(), canvas.width / 2, Math.round(canvas.height * 0.665));
     const link = document.createElement('a');
