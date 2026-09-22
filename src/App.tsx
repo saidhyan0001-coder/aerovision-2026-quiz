@@ -23,14 +23,14 @@ function downloadCertificate(participantName: string) {
     context.fillStyle = '#132b4f';
     context.font = `600 ${Math.round(46 * scale)}px Georgia, serif`;
     context.textAlign = 'center';
-    context.fillText(participantName.toUpperCase(), canvas.width / 2, Math.round(504 * scale));
+    context.fillText(participantName.toUpperCase(), canvas.width / 2, Math.round(canvas.height * 0.665));
     const link = document.createElement('a');
     link.download = `${participantName.replace(/\s+/g, '-').toLowerCase()}-aero-vision-certificate.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
-  image.onerror = () => window.alert('Add your certificate image at public/certificate-template.png first.');
-  image.src = '/certificate-template.png';
+  image.onerror = () => window.alert('The certificate template could not be loaded.');
+  image.src = '/certificate-template.jpeg';
 }
 
 function App() {

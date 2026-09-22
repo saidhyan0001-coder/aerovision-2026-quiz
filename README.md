@@ -13,4 +13,4 @@ The app follows this sequence: quiz, quiz result, feedback form, completion scre
 
 ## Certificate template
 
-Add the supplied certificate image as `public/certificate-template.png`. The completion screen will place the participant name over the template's `NAME` area and download a personalized PNG certificate.
+The certificate template is stored at `public/certificate-template.jpeg`. The completion screen places the participant name over the template's `NAME` area and downloads a personalized PNG certificate.
