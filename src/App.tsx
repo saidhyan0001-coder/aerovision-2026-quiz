@@ -20,6 +20,18 @@ function downloadCertificate(participantName: string) {
     if (!context) return;
     context.drawImage(image, 0, 0);
     const scale = canvas.width / 1151;
+    const nameAreaX = Math.round(325 * scale);
+    const nameAreaY = Math.round(492 * scale);
+    const nameAreaWidth = Math.round(610 * scale);
+    const nameAreaHeight = Math.round(76 * scale);
+    context.fillStyle = '#f8f5ee';
+    context.fillRect(nameAreaX, nameAreaY, nameAreaWidth, nameAreaHeight);
+    context.strokeStyle = '#243754';
+    context.lineWidth = Math.max(1, Math.round(2 * scale));
+    context.beginPath();
+    context.moveTo(Math.round(360 * scale), Math.round(570 * scale));
+    context.lineTo(Math.round(920 * scale), Math.round(570 * scale));
+    context.stroke();
     context.fillStyle = '#132b4f';
     context.font = `600 ${Math.round(46 * scale)}px Georgia, serif`;
     context.textAlign = 'center';
