@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Manrope', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --color-ink: #f4f8fc;
+  --color-muted: #91a5b9;
+  --color-panel: #102134;
+  --color-panel-light: #152c42;
+  --color-line: #284058;
+  --color-sky: #66d8ff;
+  --color-lime: #c4f15b;
+  --color-orange: #ffbd66;
+}
+
+:root { font-family: 'Manrope', sans-serif; color: #f4f8fc; background: #081321; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: #081321; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #66d8ff; color: #081321; }
+
+.aviation-grid { background-image: linear-gradient(rgba(102,216,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(102,216,255,.055) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, black, transparent 92%); }
+.scanline { background: linear-gradient(90deg, transparent, rgba(102,216,255,.6), transparent); animation: scan 4s ease-in-out infinite; }
+.float-in { animation: float-in .65s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes scan { 0%,100% { transform: translateX(-40%); opacity: 0; } 40%,60% { transform: translateX(40%); opacity: 1; } }
+@keyframes float-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } }
+
+@layer components {
+  .field { width: 100%; border: 1px solid #284058; border-radius: .75rem; background: rgba(12, 27, 44, .9); padding: .8rem .9rem; font-size: .875rem; color: #f4f8fc; outline: none; transition: border-color .2s, box-shadow .2s; }
+  .field:focus { border-color: #66d8ff; box-shadow: 0 0 0 3px rgba(102, 216, 255, .12); }
+  .field::placeholder { color: #91a5b9; opacity: .6; }
+  select.field option { background: #102134; }
+}

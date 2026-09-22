@@ -1,45 +1,16 @@
-# AeroVision 2026 Quiz
+# Aero Vision Workshop 2026
 
-IEEE Robotics & Automation Society — JSSATEB
+React + TypeScript + Vite + Tailwind CSS application for the Aero Vision Workshop 2026 post-workshop quiz and feedback flow.
 
-## Frontend
+## Run locally
 
-The quiz is a static browser application in `index.html`.
-
-## Backend
-
-This repository now includes Vercel Serverless Functions:
-
-- `GET /api/health` — API health check
-- `POST /api/submit` — validates a participant submission and calculates the official score from the server-side answer key
-
-### Submit format
-
-```json
-{
-  "participant": {
-    "name": "Participant Name",
-    "college": "College Name",
-    "branch": "Robotics & Automation",
-    "year": "3rd Year"
-  },
-  "answers": [1, 1, 1, 2, 1, 1, 1, 0, 0, 2, 2, 2, 1, 2, 0, 1, 1, 1, 2, 1]
-}
+```bash
+npm install
+npm run dev
 ```
 
-Each answer is an option index: `0=A`, `1=B`, `2=C`, `3=D`.
+The app follows this sequence: quiz, quiz result, feedback form, completion screen. A typed submission record is saved to browser `localStorage` under `aero-vision-workshop-submissions`, ready to be replaced with a Firebase or Supabase repository later.
 
-The API returns the server-calculated score, percentage, badge and per-question correctness.
+## Certificate template
 
-## Deploy
-
-Import this GitHub repository into Vercel. No build command is required for the static frontend and API functions.
-
-After deployment:
-
-- `https://YOUR-DOMAIN.vercel.app/`
-- `https://YOUR-DOMAIN.vercel.app/api/health`
-
-## Important
-
-The current API calculates and returns results but does not persist participant submissions to a database. Database persistence can be added later using Vercel Postgres, Neon, Supabase, or another database.
+Add the supplied certificate image as `public/certificate-template.png`. The completion screen will place the participant name over the template's `NAME` area and download a personalized PNG certificate.
